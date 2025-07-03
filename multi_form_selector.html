@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>اختيار النموذج</title>
+  <style>
+    body { font-family: Arial; direction: rtl; text-align: right; padding: 20px; }
+    .form-section { display: none; margin-top: 20px; border: 1px solid #ccc; padding: 15px; border-radius: 10px; }
+    label { display: block; margin: 10px 0 5px; }
+    input, textarea, select { width: 100%; padding: 8px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #999; }
+    button { padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <h2>اختر النموذج الذي تريد تعبئته:</h2>
+
+  <label><input type="radio" name="formChoice" value="daily"> التقرير اليومي</label>
+  <label><input type="radio" name="formChoice" value="cashflow"> التدفق النقدي</label>
+  <label><input type="radio" name="formChoice" value="wir"> سجل WIR</label>
+  <label><input type="radio" name="formChoice" value="qc"> سجل الجودة</label>
+  <label><input type="radio" name="formChoice" value="subcontractors"> المقاولين الفرعيين</label>
+  <label><input type="radio" name="formChoice" value="progress"> تقدم المشروع</label>
+  <label><input type="radio" name="formChoice" value="procurement"> تتبع المشتريات</label>
+  <label><input type="radio" name="formChoice" value="tasks"> المهام غير المنجزة</label>
+
+  <!-- نموذج التقرير اليومي -->
+  <div id="daily" class="form-section">
+    <h3>نموذج التقرير اليومي</h3>
+    <label>وقت الإرسال <input type="text"></label>
+    <label>رقم التقرير <input type="text"></label>
+    <label>تاريخ التقرير <input type="date"></label>
+    <label>اسم المشروع <input type="text"></label>
+    <label>المهندس المسؤول <input type="text"></label>
+    <label>الطقس ودرجة الحرارة <input type="text"></label>
+    <label>تفاصيل العمالة <textarea></textarea></label>
+    <label>تفاصيل المعدات <textarea></textarea></label>
+    <label>الأنشطة المنجزة <textarea></textarea></label>
+    <label>المواد الموردة <textarea></textarea></label>
+    <label>زيارات الموقع <textarea></textarea></label>
+    <label>عوائق ومشاكل <textarea></textarea></label>
+    <label>تعليمات وتوجيهات <textarea></textarea></label>
+    <label>خطة اليوم التالي <textarea></textarea></label>
+    <label>رابط الصور <input type="url"></label>
+    <button onclick="saveData('daily')">حفظ</button>
+  </div>
+
+  <!-- نموذج التدفق النقدي -->
+  <div id="cashflow" class="form-section">
+    <h3>نموذج التدفق النقدي</h3>
+    <label>تاريخ المقبوضات <input type="date"></label>
+    <label>بيان المقبوضات <input type="text"></label>
+    <label>تاريخ المصروفات <input type="date"></label>
+    <label>المبلغ المصروف <input type="number"></label>
+    <label>أوجه الصرف <input type="text"></label>
+    <label>الفاتورة <input type="text"></label>
+    <label>الرصيد <input type="number"></label>
+    <label>ملاحظات <textarea></textarea></label>
+    <button onclick="saveData('cashflow')">حفظ</button>
+  </div>
+
+  <!-- نموذج سجل WIR -->
+  <div id="wir" class="form-section">
+    <h3>سجل WIR</h3>
+    <label>WIR No <input type="text"></label>
+    <label>Date <input type="date"></label>
+    <label>Activity Description <input type="text"></label>
+    <label>Status <input type="text"></label>
+    <label>Inspector <input type="text"></label>
+    <label>Remarks <textarea></textarea></label>
+    <button onclick="saveData('wir')">حفظ</button>
+  </div>
+
+  <!-- نموذج سجل الجودة -->
+  <div id="qc" class="form-section">
+    <h3>سجل الجودة</h3>
+    <label>Item <input type="text"></label>
+    <label>Date <input type="date"></label>
+    <label>Responsible <input type="text"></label>
+    <label>Status <input type="text"></label>
+    <label>Comments <textarea></textarea></label>
+    <button onclick="saveData('qc')">حفظ</button>
+  </div>
+
+  <!-- نموذج المقاولين الفرعيين -->
+  <div id="subcontractors" class="form-section">
+    <h3>المقاولين الفرعيين</h3>
+    <label>اسم المقاول <input type="text"></label>
+    <label>نوع العمل <input type="text"></label>
+    <label>تاريخ البدء <input type="date"></label>
+    <label>تاريخ الانتهاء <input type="date"></label>
+    <label>ملاحظات <textarea></textarea></label>
+    <button onclick="saveData('subcontractors')">حفظ</button>
+  </div>
+
+  <!-- نموذج تقدم المشروع -->
+  <div id="progress" class="form-section">
+    <h3>تقدم المشروع</h3>
+    <label>التاريخ <input type="date"></label>
+    <label>النشاط <input type="text"></label>
+    <label>نسبة الإنجاز <input type="number"></label>
+    <label>ملاحظات <textarea></textarea></label>
+    <button onclick="saveData('progress')">حفظ</button>
+  </div>
+
+  <!-- نموذج تتبع المشتريات -->
+  <div id="procurement" class="form-section">
+    <h3>تتبع المشتريات</h3>
+    <label>العنصر <input type="text"></label>
+    <label>الكمية <input type="number"></label>
+    <label>المورد <input type="text"></label>
+    <label>تاريخ الطلب <input type="date"></label>
+    <label>تاريخ التسليم <input type="date"></label>
+    <label>ملاحظات <textarea></textarea></label>
+    <button onclick="saveData('procurement')">حفظ</button>
+  </div>
+
+  <!-- نموذج المهام غير المنجزة -->
+  <div id="tasks" class="form-section">
+    <h3>المهام غير المنجزة</h3>
+    <label>المهمة <input type="text"></label>
+    <label>المسؤول <input type="text"></label>
+    <label>تاريخ الإبلاغ <input type="date"></label>
+    <label>الوصف <textarea></textarea></label>
+    <button onclick="saveData('tasks')">حفظ</button>
+  </div>
+
+  <script>
+    const radios = document.querySelectorAll('input[name="formChoice"]');
+    const sections = document.querySelectorAll('.form-section');
+
+    radios.forEach(radio => {
+      radio.addEventListener('change', () => {
+        sections.forEach(section => section.style.display = 'none');
+        const targetSection = document.getElementById(radio.value);
+        if (targetSection) {
+          targetSection.style.display = 'block';
+        }
+      });
+    });
+
+    function saveData(sectionId) {
+      const section = document.getElementById(sectionId);
+      const inputs = section.querySelectorAll('input, textarea');
+      const data = {};
+
+      inputs.forEach(input => {
+        const key = input.previousSibling?.textContent?.trim() || 'غير معرف';
+        data[key] = input.value;
+      });
+
+      localStorage.setItem('form_' + sectionId, JSON.stringify(data));
+      alert('تم حفظ البيانات بنجاح ✅');
+    }
+  </script>
+
+</body>
+</html>
