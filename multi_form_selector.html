@@ -1,156 +1,174 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <title>اختيار النموذج</title>
-  <style>
-    body { font-family: Arial; direction: rtl; text-align: right; padding: 20px; }
-    .form-section { display: none; margin-top: 20px; border: 1px solid #ccc; padding: 15px; border-radius: 10px; }
-    label { display: block; margin: 10px 0 5px; }
-    input, textarea, select { width: 100%; padding: 8px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #999; }
-    button { padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; }
-  </style>
+  <meta charset="UTF-8" />
+  <title>سجل مشورة الأطفال - شامل</title>
+  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
 </head>
-<body>
+<body dir="rtl" style="font-family: Arial; padding: 30px">
 
-  <h2>اختر النموذج الذي تريد تعبئته:</h2>
+  <h2>📄 سجل مشورة الأطفال - شامل</h2>
 
-  <label><input type="radio" name="formChoice" value="daily"> التقرير اليومي</label>
-  <label><input type="radio" name="formChoice" value="cashflow"> التدفق النقدي</label>
-  <label><input type="radio" name="formChoice" value="wir"> سجل WIR</label>
-  <label><input type="radio" name="formChoice" value="qc"> سجل الجودة</label>
-  <label><input type="radio" name="formChoice" value="subcontractors"> المقاولين الفرعيين</label>
-  <label><input type="radio" name="formChoice" value="progress"> تقدم المشروع</label>
-  <label><input type="radio" name="formChoice" value="procurement"> تتبع المشتريات</label>
-  <label><input type="radio" name="formChoice" value="tasks"> المهام غير المنجزة</label>
+  <label>📤 رفع ملف Excel (اختياري):</label>
+  <input type="file" id="uploadExcel" accept=".xlsx, .xls"><br /><br />
 
-  <!-- نموذج التقرير اليومي -->
-  <div id="daily" class="form-section">
-    <h3>نموذج التقرير اليومي</h3>
-    <label>وقت الإرسال <input type="text"></label>
-    <label>رقم التقرير <input type="text"></label>
-    <label>تاريخ التقرير <input type="date"></label>
-    <label>اسم المشروع <input type="text"></label>
-    <label>المهندس المسؤول <input type="text"></label>
-    <label>الطقس ودرجة الحرارة <input type="text"></label>
-    <label>تفاصيل العمالة <textarea></textarea></label>
-    <label>تفاصيل المعدات <textarea></textarea></label>
-    <label>الأنشطة المنجزة <textarea></textarea></label>
-    <label>المواد الموردة <textarea></textarea></label>
-    <label>زيارات الموقع <textarea></textarea></label>
-    <label>عوائق ومشاكل <textarea></textarea></label>
-    <label>تعليمات وتوجيهات <textarea></textarea></label>
-    <label>خطة اليوم التالي <textarea></textarea></label>
-    <label>رابط الصور <input type="url"></label>
-    <button onclick="saveData('daily')">حفظ</button>
-  </div>
+  <form id="momForm">
+    <label>اسم الأم:</label><br />
+    <input type="text" id="name" required><br /><br />
 
-  <!-- نموذج التدفق النقدي -->
-  <div id="cashflow" class="form-section">
-    <h3>نموذج التدفق النقدي</h3>
-    <label>تاريخ المقبوضات <input type="date"></label>
-    <label>بيان المقبوضات <input type="text"></label>
-    <label>تاريخ المصروفات <input type="date"></label>
-    <label>المبلغ المصروف <input type="number"></label>
-    <label>أوجه الصرف <input type="text"></label>
-    <label>الفاتورة <input type="text"></label>
-    <label>الرصيد <input type="number"></label>
-    <label>ملاحظات <textarea></textarea></label>
-    <button onclick="saveData('cashflow')">حفظ</button>
-  </div>
+    <label>الرقم القومي:</label><br />
+    <input type="text" id="nid" required><br /><br />
 
-  <!-- نموذج سجل WIR -->
-  <div id="wir" class="form-section">
-    <h3>سجل WIR</h3>
-    <label>WIR No <input type="text"></label>
-    <label>Date <input type="date"></label>
-    <label>Activity Description <input type="text"></label>
-    <label>Status <input type="text"></label>
-    <label>Inspector <input type="text"></label>
-    <label>Remarks <textarea></textarea></label>
-    <button onclick="saveData('wir')">حفظ</button>
-  </div>
+    <label>رقم الموبايل:</label><br />
+    <input type="text" id="phone" required><br /><br />
 
-  <!-- نموذج سجل الجودة -->
-  <div id="qc" class="form-section">
-    <h3>سجل الجودة</h3>
-    <label>Item <input type="text"></label>
-    <label>Date <input type="date"></label>
-    <label>Responsible <input type="text"></label>
-    <label>Status <input type="text"></label>
-    <label>Comments <textarea></textarea></label>
-    <button onclick="saveData('qc')">حفظ</button>
-  </div>
+    <label>اسم الطفل (اختياري):</label><br />
+    <input type="text" id="childName"><br /><br />
 
-  <!-- نموذج المقاولين الفرعيين -->
-  <div id="subcontractors" class="form-section">
-    <h3>المقاولين الفرعيين</h3>
-    <label>اسم المقاول <input type="text"></label>
-    <label>نوع العمل <input type="text"></label>
-    <label>تاريخ البدء <input type="date"></label>
-    <label>تاريخ الانتهاء <input type="date"></label>
-    <label>ملاحظات <textarea></textarea></label>
-    <button onclick="saveData('subcontractors')">حفظ</button>
-  </div>
+    <label>سن الطفل (اختياري):</label><br />
+    <input type="text" id="childAge" min="0"><br /><br />
 
-  <!-- نموذج تقدم المشروع -->
-  <div id="progress" class="form-section">
-    <h3>تقدم المشروع</h3>
-    <label>التاريخ <input type="date"></label>
-    <label>النشاط <input type="text"></label>
-    <label>نسبة الإنجاز <input type="number"></label>
-    <label>ملاحظات <textarea></textarea></label>
-    <button onclick="saveData('progress')">حفظ</button>
-  </div>
+    <label>عدد الأطفال (اختياري):</label><br />
+    <input type="number" id="numChildren" min="0"><br /><br />
 
-  <!-- نموذج تتبع المشتريات -->
-  <div id="procurement" class="form-section">
-    <h3>تتبع المشتريات</h3>
-    <label>العنصر <input type="text"></label>
-    <label>الكمية <input type="number"></label>
-    <label>المورد <input type="text"></label>
-    <label>تاريخ الطلب <input type="date"></label>
-    <label>تاريخ التسليم <input type="date"></label>
-    <label>ملاحظات <textarea></textarea></label>
-    <button onclick="saveData('procurement')">حفظ</button>
-  </div>
+    <label>المدة بين آخر حمل (اختياري):</label><br />
+    <input type="text" id="gap"><br /><br />
 
-  <!-- نموذج المهام غير المنجزة -->
-  <div id="tasks" class="form-section">
-    <h3>المهام غير المنجزة</h3>
-    <label>المهمة <input type="text"></label>
-    <label>المسؤول <input type="text"></label>
-    <label>تاريخ الإبلاغ <input type="date"></label>
-    <label>الوصف <textarea></textarea></label>
-    <button onclick="saveData('tasks')">حفظ</button>
-  </div>
+    <label>تاريخ ميلاد الطفل (اختياري):</label><br />
+    <input type="date" id="birthDate"><br /><br />
+
+    <button type="submit">➕ إضافة</button>
+  </form>
+
+  <br />
+  <button id="downloadBtn" style="display:none;">📥 تحميل Excel</button>
+  <button id="clearBtn" style="display:none; background-color: crimson; color: white;">🗑️ مسح كل البيانات</button>
+
+  <h3>📝 البيانات الحالية:</h3>
+  <ul id="dataList"></ul>
 
   <script>
-    const radios = document.querySelectorAll('input[name="formChoice"]');
-    const sections = document.querySelectorAll('.form-section');
+    let dataList = [];
 
-    radios.forEach(radio => {
-      radio.addEventListener('change', () => {
-        sections.forEach(section => section.style.display = 'none');
-        const targetSection = document.getElementById(radio.value);
-        if (targetSection) {
-          targetSection.style.display = 'block';
+    const STORAGE_KEY = "momDataExtended";
+    const listElement = document.getElementById("dataList");
+    const form = document.getElementById("momForm");
+    const downloadBtn = document.getElementById("downloadBtn");
+    const clearBtn = document.getElementById("clearBtn");
+
+    window.onload = () => {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        dataList = JSON.parse(saved);
+        updateUI();
+      }
+    };
+
+    document.getElementById("uploadExcel").addEventListener("change", function (e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: "array" });
+        const sheet = workbook.Sheets[workbook.SheetNames[0]];
+        const sheetData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+        if (sheetData.length > 0 && sheetData[0][0] === "اسم الأم") {
+          sheetData.shift(); // remove headers
         }
-      });
+
+        for (const row of sheetData) {
+          if (row.length >= 3) {
+            dataList.push(row);
+          }
+        }
+
+        saveToStorage();
+        updateUI();
+      };
+      reader.readAsArrayBuffer(file);
     });
 
-    function saveData(sectionId) {
-      const section = document.getElementById(sectionId);
-      const inputs = section.querySelectorAll('input, textarea');
-      const data = {};
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
 
-      inputs.forEach(input => {
-        const key = input.previousSibling?.textContent?.trim() || 'غير معرف';
-        data[key] = input.value;
+      const name = document.getElementById("name").value.trim();
+      const nid = document.getElementById("nid").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const childName = document.getElementById("childName").value.trim();
+      const childAge = document.getElementById("childAge").value.trim();
+      const numChildren = document.getElementById("numChildren").value.trim();
+      const gap = document.getElementById("gap").value.trim();
+      const birthDate = document.getElementById("birthDate").value;
+      const date = new Date().toLocaleDateString("ar-EG");
+
+      if (!name || !nid || !phone) {
+        alert("من فضلك أدخل البيانات الأساسية");
+        return;
+      }
+
+      const row = [
+        name,
+        nid,
+        phone,
+        childName || "",
+        childAge || "",
+        numChildren || "",
+        gap || "",
+        birthDate || "",
+        date
+      ];
+      dataList.push(row);
+      saveToStorage();
+      updateUI();
+      form.reset();
+    });
+
+    downloadBtn.addEventListener("click", function () {
+      const headers = [
+        "اسم الأم", "الرقم القومي", "رقم الموبايل", "اسم الطفل", "سن الطفل",
+        "عدد الأطفال", "المدة بين آخر حمل", "تاريخ ميلاد الطفل", "تاريخ الإدخال"
+      ];
+      const ws_data = [headers, ...dataList];
+
+      const ws = XLSX.utils.aoa_to_sheet(ws_data);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "سجل مشورة");
+
+      const wbout = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+      const blob = new Blob([wbout], { type: "application/octet-stream" });
+
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "سجل_مشورة.xlsx";
+      a.click();
+    });
+
+    clearBtn.addEventListener("click", () => {
+      if (confirm("هل أنت متأكد أنك تريد مسح كل البيانات؟")) {
+        dataList = [];
+        localStorage.removeItem(STORAGE_KEY);
+        updateUI();
+      }
+    });
+
+    function updateUI() {
+      listElement.innerHTML = "";
+      dataList.forEach((row) => {
+        const li = document.createElement("li");
+        li.textContent =
+          `👩‍🦱 ${row[0]} | 🪪 ${row[1]} | 📱 ${row[2]} | 👶 ${row[3] || "-"} | 🎂 ${row[4] || "-"} | 👨‍👩‍👧‍👦 ${row[5] || "-"} | ⏱ ${row[6] || "-"} | 📅 ميلاد: ${row[7] || "-"} | إدخال: ${row[8]}`;
+        listElement.appendChild(li);
       });
 
-      localStorage.setItem('form_' + sectionId, JSON.stringify(data));
-      alert('تم حفظ البيانات بنجاح ✅');
+      downloadBtn.style.display = dataList.length ? "inline-block" : "none";
+      clearBtn.style.display = dataList.length ? "inline-block" : "none";
+    }
+
+    function saveToStorage() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(dataList));
     }
   </script>
 
